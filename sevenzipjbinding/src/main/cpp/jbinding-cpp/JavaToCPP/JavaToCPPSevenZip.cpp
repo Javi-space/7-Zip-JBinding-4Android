@@ -141,7 +141,7 @@ JBINDING_JNIEXPORT jobject JNICALL Java_net_sf_sevenzipjbinding_SevenZip_nativeO
                                                                                            jobject archiveOpenCallbackImpl) {
 
 #define MAX_CHECK_START_POSITION  (4 * 1024 * 1024)  // Advice from Igor Pavlov
-#define CHEAD_CACHE_SIZE          16384
+#define CHEAD_CACHE_SIZE          32768
 
     TRACE("SevenZip.nativeOpenArchive()")
 
