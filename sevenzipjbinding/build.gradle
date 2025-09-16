@@ -1,11 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
-// CORRECTED ANDROID BLOCK - SIMPLIFIED VERSION
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-    
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 29
@@ -13,33 +11,29 @@ android {
         versionName "16.02-2.02"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-        externalNativeBuild {
-            cmake {
-                // Add 16KB alignment flags here
-                cFlags "-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
-                cppFlags "-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
-            }
-        }
     }
-    
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    
-    externalNativeBuild {
+  	
+	 externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
+           
         }
     }
-    
-    packagingOptions {
-        jniLibs {
-            useLegacyPackaging = true
+	 externalNativeBuild {
+        cmake {
+          // Add these flags for 16KB alignment
+            arguments '-DCMAKE_C_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384',
+                      '-DCMAKE_CXX_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384'     
         }
     }
+	
+	
 }
 
 dependencies {
@@ -58,7 +52,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Javi-space'
                 artifactId = '7-Zip-JBinding-4Android'
-                version = '16.02-2.02-16kb-aligned'
+                version = '16.02-2.02-16kb'
                 
                 pom {
                     name = '7-Zip-JBinding-4Android'
