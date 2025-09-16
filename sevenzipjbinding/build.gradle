@@ -18,16 +18,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-  	
-	 externalNativeBuild {
+    externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
-            // Add these flags for 16KB alignment
-            arguments "-DCMAKE_C_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384",
-                      "-DCMAKE_CXX_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
         }
     }
-	
+    
+    // ADD THIS FOR 16KB ALIGNMENT (correct placement)
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true // This might help with alignment
+        }
+    }
+}
+
+// ADD THIS OUTSIDE THE ANDROID BLOCK (correct placement)
+android.externalNativeBuild.cmake {
+    // Add these flags for 16KB alignment
+    arguments "-DCMAKE_C_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384",
+              "-DCMAKE_CXX_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
 }
 
 dependencies {
@@ -46,7 +55,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.Javi-space'
                 artifactId = '7-Zip-JBinding-4Android'
-                version = '16.02-2.02-16kb'
+                version = '16.02-2.02-16kb-aligned'
                 
                 pom {
                     name = '7-Zip-JBinding-4Android'
@@ -75,4 +84,3 @@ afterEvaluate {
         }
     }
 }
-
