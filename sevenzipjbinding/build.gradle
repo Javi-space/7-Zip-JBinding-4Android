@@ -25,14 +25,6 @@ android {
            
         }
     }
-	 externalNativeBuild {
-        cmake {
-          // Add these flags for 16KB alignment
-            arguments '-DCMAKE_C_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384',
-                      '-DCMAKE_CXX_FLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384'     
-        }
-    }
-	
 	
 }
 
