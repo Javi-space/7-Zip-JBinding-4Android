@@ -9,6 +9,10 @@ set(TEST_SRC ${ROOT}/test)
 set(P7ZIP_SRC ${ROOT}/p7zip)
 set(SEVEN_ZIP_SRC ${P7ZIP_SRC})
 
+# Add these compiler and linker flags for 16KB page alignment
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384")
+
 set(JBINDING_CPP_FILES
         ${JBINDING_SRC}/Debug.cpp
         ${JBINDING_SRC}/JNITools.cpp
