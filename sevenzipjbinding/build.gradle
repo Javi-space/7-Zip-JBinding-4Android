@@ -1,28 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
-
-ext {
-    bintrayRepo = '7-Zip-JBinding-4Android'
-    bintrayName = 'net.sf.sevenzipjbinding'
-    libraryName = 'sevenzipjbinding'
-
-    publishedGroupId = 'net.sf.sevenzipjbinding'
-    artifact = 'sevenzipjbinding'
-    libraryVersion = '16.02-2.02'
-
-    libraryDescription = 'Android Java wrapper for 7z archiver engine'
-    siteUrl = 'https://github.com/omicronapps/7-Zip-JBinding-4Android'
-    gitUrl = 'https://github.com/omicronapps/7-Zip-JBinding-4Android.git'
-
-    developerId = 'omicronapps'
-    developerName = 'Fredrik Claesson'
-    developerEmail = 'info@omicronapplications.com'
-
-    licenseName = 'GNU Lesser General Public License, version 2.1'
-    licenseUrl = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html'
-    allLicenses = ["LGPL-2.1"]
-}
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -56,7 +33,41 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
-if (project.rootProject.file('local.properties').exists()) {
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+// Maven publication configuration
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.Javi-space'
+                artifactId = '7-Zip-JBinding-4Android'
+                version = '16.02-2.02-16kb'
+                
+                pom {
+                    name = '7-Zip-JBinding-4Android'
+                    description = 'Android Java wrapper for 7z archiver engine with 16kb page support'
+                    url = 'https://github.com/Javi-space/7-Zip-JBinding-4Android'
+                    licenses {
+                        license {
+                            name = 'GNU Lesser General Public License, version 2.1'
+                            url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'Javi-space'
+                            name = 'Javi-space'
+                            email = 'technologiescontrol@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'https://github.com/Javi-space/7-Zip-JBinding-4Android.git'
+                        developerConnection = 'https://github.com/Javi-space/7-Zip-JBinding-4Android.git'
+                        url = 'https://github.com/Javi-space/7-Zip-JBinding-4Android'
+                    }
+                }
+            }
+        }
+    }
 }
+
