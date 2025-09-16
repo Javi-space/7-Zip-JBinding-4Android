@@ -3,9 +3,5 @@ jdk:
 before_install:
   - sdk install java 8.0.292-open
   - sdk use java 8.0.292-open
-  - wget https://services.gradle.org/distributions/gradle-6.5-bin.zip
-  - unzip -q gradle-6.5-bin.zip
-  - export GRADLE_HOME=$PWD/gradle-6.5
-  - export PATH=$GRADLE_HOME/bin:$PATH
 install:
-  - ./gradlew build -x test --no-daemon
+  - ./gradlew publishToMavenLocal --no-daemon
